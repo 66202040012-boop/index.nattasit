@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLIO | Mr.Nattasit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== COOL NAV BUTTON (GLASS + NEON) ===== */
+.nav-links li a {
+    position: relative;
+    padding: 0 26px;
+    height: 42px;
+    margin: 0 8px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.35s ease;
+    overflow: hidden;
+}
+
+/* เส้นไฟ */
+.nav-links li a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(0,212,255,0.6),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+/* Hover */
+.nav-links li a:hover::before {
+    left: 100%;
+}
+
+.nav-links li a:hover {
+    border-color: rgba(0,212,255,0.8);
+    box-shadow: 0 0 18px rgba(0,212,255,0.4);
+    transform: translateY(-1px);
+}
+
+/* Active Page */
+.nav-links li a.active {
+    background: rgba(0,212,255,0.18);
+    color: #00d4ff;
+    border-color: #00d4ff;
+    box-shadow: 0 0 25px rgba(0,212,255,0.6);
+}
+
+        /* Lightbox */
+#lightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+#lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+        :root {
+            --primary-red: #09277b;
+            --tech-blue: #001f3f;
+            --accent-cyan: hsl(190, 100%, 50%);
+            --bg-color: #f8f9fa;
+            --content-width: 1100px;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* --- หน้าจอ Welcome --- */
+        #welcome-screen {
+            height: 100vh;
+            width: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://scontent.fbkk12-1.fna.fbcdn.net/v/t39.30808-6/611605667_1428513762396187_5310772690084008275_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEDp73-bM3JU91aZ2uC8x-A6Pya5zrSGRPo_JrnOtIZE72L98q9yBkqMCJ5f51z9VI82IX5Bg5YvRnGMtbOCELP&_nc_ohc=QSWvgt3t7rgQ7kNvwHi2CJx&_nc_oc=AdlLxPc6IFxUAolfrhCBCPxcecpXsjeN9VOD-6Mq-7huuKn92Q3CThdXUxDNsWLXq1LNkKo1-Tac0WX0BR79k3Ql&_nc_zt=23&_nc_ht=scontent.fbkk12-1.fna&_nc_gid=dS6pH9MjxOUJTn4wn1Ov2A&oh=00_Afq64giLUeJQfBFiwdb0OyngvSaJD_MaBBJ3eDqt86ux-w&oe=69753DCF');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .hero-text h1 { font-size: 4rem; margin: 0; letter-spacing: 5px; }
+        .hero-text p { font-size: 1.5rem; margin-bottom: 30px; opacity: 0.8; }
+
+        .btn-enter {
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            color: white;
+            background: var(--primary-red);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-enter:hover {
+            transform: scale(1.05);
+            background: #011d82;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        #main-site-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        nav {
+            background-color: var(--primary-red);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 70px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-links { list-style: none; display: flex; margin: 0; padding: 0; height: 100%; }
+        .nav-links li a {
+            color: white; text-decoration: none; padding: 0 20px;
+            display: flex; align-items: center; height: 100%; transition: 0.3s;
+            cursor: pointer;
+        }
+        .nav-links li a.active { background: rgba(0,0,0,0.2); color: var(--accent-cyan); }
+
+        .banner {
+            background: linear-gradient(135deg, #001f3f 0%, #004080 100%);
+            padding: 80px 0; color: white; text-align: center;
+            border-bottom: 5px solid var(--accent-cyan);
+        }
+
+        .banner-container { 
+            max-width: var(--content-width); margin: auto; 
+            display: flex; align-items: center; justify-content: center; gap: 40px; 
+        }
+
+        .banner-img-wrapper {
+            width: 180px; height: 180px; border-radius: 50%; 
+            border: 5px solid white; overflow: hidden; flex-shrink: 0;
+        }
+        .banner-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .main-content { max-width: var(--content-width); margin: 50px auto; padding: 0 20px; }
+
+        .content-section { display: none; animation: fadeIn 0.8s ease; }
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .glass-card {
+            background: white; padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05); display: flex; gap: 40px;
+        }
+
+        /* ปรับ Grid สำหรับ 2 รูป */
+        .grid-container { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+            max-width: 800px;
+            margin: auto;
+        }
+        .card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        .card img { width: 100%; height: 250px; object-fit: cover; }
+        .card-body { padding: 20px; text-align: center; }
+
+        .details p { padding: 10px 0; border-bottom: 1px solid #f0f0f0; margin: 0; }
+        .details b { color: var(--primary-red); width: 140px; display: inline-block; }
+
+      
+      
+      
+      
+      
+      
+      
+      
+        footer { text-align: center; padding: 50px; color: #999; }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-screen">
+        <div class="hero-text">
+            <h1>PORTFOLIO</h1>
+            <p>นายณัฐสิทธิ์ ศรียงยศ | คอมพิวเตอร์</p>
+        </div>
+        <button class="btn-enter" onclick="enterWebsite()">เข้าสู่หน้าเว็บไซต์</button>
+    </div>
+
+    <div id="main-site-content">
+        <nav>
+            <div style="color:white; font-weight:bold; font-size:1.5rem;">PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('home', this)" class="active">    หน้าแรก    </a></li>
+                <li><a onclick="showPage('profile', this)">ประวัติส่วนตัว</a></li>
+                <li><a onclick="showPage('education', this)">ประวัติการศึกษา</a></li>
+                <li><a onclick="showPage('works', this)">ภาพรวมและผลงาน</a></li>
+            </ul>
+        </nav>
+
+        <header class="banner">
+            <div class="banner-container">
+                <div class="banner-img-wrapper">
+                    <img src="000.jpg" alt="Profile">
+                </div>
+                <div class="banner-text" style="text-align: left;">
+                    <h2 style="font-style: italic; margin:0; opacity: 0.8;">Mr.Nattasit Sriyongyot</h2>
+                    <h1 style="font-size: 3rem; margin: 5px 0;">ณัฐสิทธิ์ ศรียงยศ</h1>
+                    <p style="color: var(--accent-cyan); font-size: 1.2rem;">วิทยาลัยเทคนิคบัวใหญ่ | BUAYAI TECHNICAL COLLEGE</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <section id="home" class="content-section active">
+                <div class="glass-card" style="justify-content: center; text-align: center;">
+                    <div>
+                        <h1 style="color: var(--tech-blue); font-size: 2.5rem;">ยินดีต้อนรับสู่เว็บไซต์พอร์ตโฟลิโอ</h1>
+                        <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: auto;">
+                            รวบรวมผลงาน ประวัติการศึกษา <br>
+                            เชิญเลือกชมข้อมูลในหัวข้อต่างๆ ได้จากเมนูด้านบนครับ
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="profile" class="content-section">
+                <div class="glass-card">
+                    <img src="download.jpg" style="border-radius: 15px; width: 280px;" alt="Me">
+                    <div class="details" style="flex:1;">
+                        <h2 style="color: var(--tech-blue); margin-top:0;">ข้อมูลส่วนตัว</h2>
+                        <p><b>ชื่อ - สกุล :</b> นาย ณัฐสิทธิ์ ศรียงยศ</p>
+                        <p><b>ชื่อเล่น :</b> ปาล์ม</p>
+                        <p><b>อายุ :</b> 18 ปี</p>
+                        <p><b>วันเกิด :</b> 25 มกราคม 2551</p>
+                        <p><b>อีเมล :</b> 66202040012@bic.ac.th</p>
+                        <p><b>เบอร์โทร :</b> 082-828-0946</p>
+                        <p><b>คติประจำใจ :</b> เรียนรู้เพื่ออนาคต พัฒนาเพื่อความสำเร็จ</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="education" class="content-section">
+                <div class="glass-card" style="display: block;">
+                    <h2 style="color: var(--tech-blue);">ประวัติการศึกษา</h2>
+                    <p><b>ระดับ ปวช. :</b> วิทยาลัยเทคนิคบัวใหญ่ (แผนกคอมพิวเตอร์)</p>
+                    <p><b>ระดับมัธยมศึกษา :</b> โรงเรียนบ้านหมัน</p>
+                </div>
+            </section>
+
+            <section id="works" class="content-section">
+                <div class="grid-container">
+                    <div class="card">
+                        <img src="220.png" alt="Work 1"onclick="openLightbox(this)">
+                        <div class="card-body">
+                            <h3>เกียรติบัตร Thai Mook</h3>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="Screenshot 2026-01-19 212543.png" alt="Work 2"onclick="openLightbox(this)">
+                        <div class="card-body">
+                            <h3>เกียรติบัตร</h3>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="card">
+    <img src="0001.png" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>เกียรติบัตร Thai Mook</h3>
+        <p></p>
+    </div>
+</div>
+<div class="card">
+    <img src="z4.png" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>รูปทำงานที่สถานประกอบการ</h3>
+        <p></p>
+    </div>
+</div>
+<div class="card">
+    <img src="z3.png" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>ภาพรวมที่สถานประกอบการ</h3>
+        <p></p>
+    </div>
+</div>
+<div class="card">
+    <img src="z2.png" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>รูปภาพรวมการทำกิจกรรม</h3>
+        <p></p>
+    </div>
+</div>
+<div class="card">
+    <img src="z1.png" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>รูปภาพรวมการทำกิจกรรม</h3>
+        <p></p>
+    </div>
+</div>
+<div class="card">
+    <img src="601450288_1426175162842670_7848409293040404926_n.jpg" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>รูปภาพกิจกรรม</h3>
+        <p></p>
+    </div>
+</div>
+<div class="card">
+    <img src="618494009_1441916741055889_7935677906294197405_n (1).jpg" alt="Work 3" onclick="openLightbox(this)">
+    <div class="card-body">
+        <h3>รูปภาพกิจกรรม</h3>
+        <p></p>
+    </div>
+</div>
+
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            © 2026 Nattasit Sriyongyot | Computer Student
+        </footer>
+    </div>
+
+    <script>
+        function enterWebsite() {
+            const welcome = document.getElementById('welcome-screen');
+            const mainContent = document.getElementById('main-site-content');
+            welcome.style.transform = 'translateY(-100%)';
+            mainContent.style.display = 'block';
+            setTimeout(() => {
+                mainContent.style.opacity = '1';
+                document.body.style.overflow = 'auto';
+            }, 500);
+        }
+
+        document.body.style.overflow = 'hidden';
+
+        function showPage(pageId, element) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            const links = document.querySelectorAll('.nav-links li a');
+            links.forEach(link => link.classList.remove('active'));
+            element.classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    function openLightbox(img) {
+        document.getElementById('lightbox').style.display = 'flex';
+        document.getElementById('lightbox-img').src = img.src;
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    </script>
+    <!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+    <span class="close-btn">&times;</span>
+    <img id="lightbox-img">
+</div>
+</body>
+</html>
